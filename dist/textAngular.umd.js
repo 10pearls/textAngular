@@ -2872,18 +2872,18 @@ angular.module('textAngular.taBind', ['textAngular.factories', 'textAngular.DOM'
             /* istanbul ignore next: ie specific test */
             if(attrs.taDefaultWrap === ''){
                 _defaultVal = '';
-                _defaultTest = (_browserDetect.ie === undefined)? '<div><br></div>' : (_browserDetect.ie >= 11)? '<p><br></p>' : (_browserDetect.ie <= 8)? '<P>&nbsp;</P>' : '<p>&nbsp;</p>';
+                _defaultTest = (_browserDetect.ie === undefined)? '<div></div>' : (_browserDetect.ie >= 11)? '' : (_browserDetect.ie <= 8)? '<P></P>' : '<p></p>';
             }else{
                 _defaultVal = (_browserDetect.ie === undefined || _browserDetect.ie >= 11)?
-                    (attrs.taDefaultWrap.toLowerCase() === 'br' ? '<BR><BR>' : '<' + attrs.taDefaultWrap + '><br></' + attrs.taDefaultWrap + '>') :
+                    (attrs.taDefaultWrap.toLowerCase() === 'br' ? '<BR><BR>' : '<' + attrs.taDefaultWrap + '></' + attrs.taDefaultWrap + '>') :
                     (_browserDetect.ie <= 8)?
                         '<' + attrs.taDefaultWrap.toUpperCase() + '></' + attrs.taDefaultWrap.toUpperCase() + '>' :
                         '<' + attrs.taDefaultWrap + '></' + attrs.taDefaultWrap + '>';
                 _defaultTest = (_browserDetect.ie === undefined || _browserDetect.ie >= 11)?
-                    (attrs.taDefaultWrap.toLowerCase() === 'br' ? '<br><br>' : '<' + attrs.taDefaultWrap + '><br></' + attrs.taDefaultWrap + '>') :
+                    (attrs.taDefaultWrap.toLowerCase() === 'br' ? '' : '<' + attrs.taDefaultWrap + '></' + attrs.taDefaultWrap + '>') :
                     (_browserDetect.ie <= 8)?
-                        '<' + attrs.taDefaultWrap.toUpperCase() + '>&nbsp;</' + attrs.taDefaultWrap.toUpperCase() + '>' :
-                        '<' + attrs.taDefaultWrap + '>&nbsp;</' + attrs.taDefaultWrap + '>';
+                        '<' + attrs.taDefaultWrap.toUpperCase() + '></' + attrs.taDefaultWrap.toUpperCase() + '>' :
+                        '<' + attrs.taDefaultWrap + '></' + attrs.taDefaultWrap + '>';
             }
 
             /* istanbul ignore else */
@@ -3366,7 +3366,7 @@ angular.module('textAngular.taBind', ['textAngular.factories', 'textAngular.DOM'
                                 text = text.replace(/\n/g, ' ');
                             }else{
                                 // remove unnecessary chrome insert
-                                text = text.replace(/<(|\/)meta[^>]*?>/ig, '');
+                                text = text.replace(/<(|\/)(html|body|meta)[^>]*?>/ig, '').trim();
                                 if(text.match(/<[^>]*?(ta-bind)[^>]*?>/)){
                                     // entire text-angular or ta-bind has been pasted, REMOVE AT ONCE!!
                                     if(text.match(/<[^>]*?(text-angular)[^>]*?>/)){
@@ -3402,10 +3402,10 @@ angular.module('textAngular.taBind', ['textAngular.factories', 'textAngular.DOM'
                             text = text.replace(/^[ |\u00A0]+/gm, function (match) {
                                 var result = '';
                                 for (var i = 0; i < match.length; i++) {
-                                    result += '&nbsp;';
+                                    result += '';
                                 }
                                 return result;
-                            }).replace(/\n|\r\n|\r/g, '<br />').replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
+                            }).replace(/\n|\r\n|\r/g, '').replace(/\t/g, '');
 
                             if(_pasteHandler) text = _pasteHandler(scope, {$html: text}) || text;
 
@@ -3639,7 +3639,7 @@ angular.module('textAngular.taBind', ['textAngular.factories', 'textAngular.DOM'
                                             //console.log('wrong....', ps);
                                             // we need to remove this selection and fix the previousSibling up...
                                             if (ps) {
-                                                ps.innerHTML = ps.innerHTML + '<br><br>';
+                                                ps.innerHTML = ps.innerHTML + '';
                                                 angular.element(selection).remove();
                                                 taSelection.setSelectionToElementEnd(ps);
                                             }
