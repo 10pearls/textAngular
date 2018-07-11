@@ -153,18 +153,18 @@ angular.module('textAngular.taBind', ['textAngular.factories', 'textAngular.DOM'
             /* istanbul ignore next: ie specific test */
             if(attrs.taDefaultWrap === ''){
                 _defaultVal = '';
-                _defaultTest = (_browserDetect.ie === undefined)? '<div></div>' : (_browserDetect.ie >= 11)? '' : (_browserDetect.ie <= 8)? '<P></P>' : '<p></p>';
+                _defaultTest = (_browserDetect.ie === undefined)? '<div><br></div>' : (_browserDetect.ie >= 11)? '<p><br></p>' : (_browserDetect.ie <= 8)? '<P>&nbsp;</P>' : '<p>&nbsp;</p>';
             }else{
                 _defaultVal = (_browserDetect.ie === undefined || _browserDetect.ie >= 11)?
-                    (attrs.taDefaultWrap.toLowerCase() === 'br' ? '<BR><BR>' : '<' + attrs.taDefaultWrap + '></' + attrs.taDefaultWrap + '>') :
+                    (attrs.taDefaultWrap.toLowerCase() === 'br' ? '<BR><BR>' : '<' + attrs.taDefaultWrap + '><br></' + attrs.taDefaultWrap + '>') :
                     (_browserDetect.ie <= 8)?
                         '<' + attrs.taDefaultWrap.toUpperCase() + '></' + attrs.taDefaultWrap.toUpperCase() + '>' :
                         '<' + attrs.taDefaultWrap + '></' + attrs.taDefaultWrap + '>';
                 _defaultTest = (_browserDetect.ie === undefined || _browserDetect.ie >= 11)?
-                    (attrs.taDefaultWrap.toLowerCase() === 'br' ? '' : '<' + attrs.taDefaultWrap + '></' + attrs.taDefaultWrap + '>') :
+                    (attrs.taDefaultWrap.toLowerCase() === 'br' ? '<br><br>' : '<' + attrs.taDefaultWrap + '><br></' + attrs.taDefaultWrap + '>') :
                     (_browserDetect.ie <= 8)?
-                        '<' + attrs.taDefaultWrap.toUpperCase() + '></' + attrs.taDefaultWrap.toUpperCase() + '>' :
-                        '<' + attrs.taDefaultWrap + '></' + attrs.taDefaultWrap + '>';
+                        '<' + attrs.taDefaultWrap.toUpperCase() + '>&nbsp;</' + attrs.taDefaultWrap.toUpperCase() + '>' :
+                        '<' + attrs.taDefaultWrap + '>&nbsp;</' + attrs.taDefaultWrap + '>';
             }
 
             /* istanbul ignore else */
